@@ -95,6 +95,15 @@
   notify: restart newrelic-infra
   when: nrinfragent_state != "absent"
 
+- name: Ensure the target log file directory exists
+  file:
+    path:      "{{ nrinfragent_config.log_file }}"
+    state:     directory
+  when:
+  - nrinfragent_state != "absent"
+  - nrinfragent_config is defined
+  - nrinfragent_config.log_file is defined
+
 - name: setup agent service
   service: name=newrelic-infra state=started enabled=yes
   when: nrinfragent_state != "absent"
