@@ -97,10 +97,11 @@
 
 - name: Ensure the target log file directory exists
   file:
-    path:      "{{ nrinfragent_config.log_file }}"
+    path:      "{{ newrelic_log_dir }}"
     state:     directory
   when:
   - nrinfragent_state != "absent"
+  - newrelic_log_dir is defined
   - nrinfragent_config is defined
   - nrinfragent_config.log_file is defined
 
