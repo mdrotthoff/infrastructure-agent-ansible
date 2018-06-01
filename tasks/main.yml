@@ -74,6 +74,7 @@
     name: "newrelic-infra{{ nrinfragent_version }}"
     state: "{{ nrinfragent_state }}"
   when: nrinfragent_os_name|lower == 'redhat'
+  ignore_errors: ansible_check_mode
 
 - name: install agent
   apt:
