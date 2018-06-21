@@ -29,14 +29,14 @@
 
 # Need to add uninstall tasks for when state == absent
 - name: Execute set up on a Debian based system
-  include_tasks: install-debian.yml
+  include_tasks: debian-install.yml
   when:
   - nrinfragent_os_name|lower == 'debian'
   - nrinfragent_state != "absent"
 
 # Need to add uninstall tasks for when state == absent
 - name: Execute set up on a Suse based system
-  include_tasks: install-suse.yml
+  include_tasks: suse-install.yml
   when:
   - nrinfragent_os_name|lower == 'suse'
   - nrinfragent_state != "absent"
