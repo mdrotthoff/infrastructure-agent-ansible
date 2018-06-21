@@ -10,6 +10,21 @@
     var: nrinfragent_config
     verbosity: 2
 
+- name: Display Oracle Database New Relic configuration
+  debug:
+    var: nrinfragent_config_oracle_database
+    verbosity: 2
+
+- name: Display Golden Gate New Relic configuration
+  debug:
+    var: nrinfragent_config_golden_gate
+    verbosity: 2
+
+- name: Display Elastic Search New Relic configuration to be applied
+  debug:
+    var: nrinfragent_config_elastic_search
+    verbosity: 2
+
 - name: Execute set up on a RedHat based system
   include_tasks: install-redhat.yml
   when:
