@@ -1,4 +1,17 @@
 ---
+# $Author$
+# $Date$
+# $Source$
 
-- name: restart newrelic-infra
-  service: name=newrelic-infra state=restarted
+# handlers file for newrelic-infra
+- name: Stop newrelic-infra service
+  listen: Restart newrelic-infra
+  service:
+    name: newrelic-infra
+    state: stopped
+
+- name: Set newrelic-infra service to the desired state
+  listen: Restart newrelic-infra
+  service:
+    name: newrelic-infra
+    state: "{{ newrelic_service_state | default(started) }}"
