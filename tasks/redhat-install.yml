@@ -10,11 +10,10 @@
     var: yum_redhat_lsb_result
     verbosity: 2
 
-
-# Only do this if redhat-lsb-core was not initially present
 - name: Re-read ansible_lsb facts
   setup:
     filter: ansible_lsb*
+  when: yum_redhat_lsb_result == 'Changed'
 
 - name: Setup agent repo keys
   rpm_key:
