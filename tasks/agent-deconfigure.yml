@@ -1,0 +1,30 @@
+---
+- name: Setup the agent service
+  service:
+    name: newrelic-infra
+    state: stopped
+    enabled: false
+
+- name: Remove agent configuration
+  file:
+    path: /etc/newrelic-infra.yml
+    state: absent
+  notify: restart newrelic-infra
+
+- name: Deconfigure logrotate for the files
+  file:
+    path: "{{ logrotate_conf_dir }}{{ item.name }}"
+    state: absent
+  with_items: "{{ newrelic_logrotate.logrotate_scripts }}"
+  when:
+  - newrelic_logrotate is defined
+  - newrelic_logrotate.logrotate_scripts is defined
+
+- name: Remove the target log file directory
+  file:
+    path: "{{ newrelic_log_dir }}"
+    state: absent
+  when:
+  - newrelic_log_dir is defined
+  - nrinfragent_config is defined
+  - nrinfragent_config.log_file is defined

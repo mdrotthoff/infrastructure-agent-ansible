@@ -10,6 +10,11 @@
     var: nrinfragent_config
     verbosity: 2
 
+- name: Deconfigure the agent if requested
+  include_tasks: agent-deconfigure.yml
+  when:
+  - nrinfragent_state == "absent"
+
 - name: Execute set up on a RedHat based system
   include_tasks: install-redhat.yml
   when:
@@ -30,6 +35,6 @@
   - nrinfragent_state != "absent"
 
 - name: Configure the agent for use
-  include_tasks: agent-configuration.yml
+  include_tasks: agent-configure.yml
   when:
   - nrinfragent_state != "absent"
