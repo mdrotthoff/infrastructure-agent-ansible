@@ -16,9 +16,16 @@
 #  - nrinfragent_state == "absent"
 
 - name: Execute set up on a RedHat based system
-  include_tasks: install-redhat.yml
+  include_tasks: redhat-install.yml
   when:
   - nrinfragent_os_name|lower == 'redhat'
+  - nrinfragent_state != "absent"
+
+- name: Execute set up on a RedHat based system
+  include_tasks: redhat-uninstall.yml
+  when:
+  - nrinfragent_os_name|lower == 'redhat'
+  - nrinfragent_state == "absent"
 
 # Need to add uninstall tasks for when state == absent
 - name: Execute set up on a Debian based system
