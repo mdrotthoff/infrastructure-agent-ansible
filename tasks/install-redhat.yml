@@ -4,6 +4,7 @@
     name: redhat-lsb-core
     state: present
 
+# Only do this if redhat-lsb-core was not initially present
 - name: Re-read ansible_lsb facts
   setup:
     filter: ansible_lsb*

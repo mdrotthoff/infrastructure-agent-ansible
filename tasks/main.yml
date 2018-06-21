@@ -10,20 +10,24 @@
     var: nrinfragent_config
     verbosity: 2
 
+# Need to add uninstall tasks for when state == absent
 - name: Execute set up on a RedHat based system
   include_tasks: install-redhat.yml
   when:
   - nrinfragent_os_name|lower == 'redhat'
+  - nrinfragent_state != "absent"
 
 - name: Execute set up on a Debian based system
   include_tasks: install-debian.yml
   when:
   - nrinfragent_os_name|lower == 'debian'
+  - nrinfragent_state != "absent"
 
 - name: Execute set up on a Suse based system
   include_tasks: install-suse.yml
   when:
   - nrinfragent_os_name|lower == 'suse'
+  - nrinfragent_state != "absent"
 
 - name: Configure the agent for use
   include_tasks: agent-configuration.yml
