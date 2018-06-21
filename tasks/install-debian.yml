@@ -22,5 +22,5 @@
 
 - name: Configure the agent for use
   include_tasks: agent-configure.yml
-  when:
-  - nrinfragent_state != "absent"
+#  when:
+#  - nrinfragent_state != "absent"
