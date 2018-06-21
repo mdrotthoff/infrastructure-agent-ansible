@@ -3,7 +3,6 @@
   rpm_key:
     key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     state: present
-#  when: nrinfragent_os_name|lower == 'suse'
 
 - name: setup agent repo reference
   zypper_repository:
@@ -14,10 +13,8 @@
     auto_import_keys: "yes"
     disable_gpg_check: "yes"
   when: nrinfragent_os_name|lower == 'suse'
-#  register: infra_agent_zypper_repo
 
 - name: install agent
   zypper:
     name: newrelic-infra
     state: "{{ nrinfragent_state }}"
-#  when: nrinfragent_os_name|lower == 'suse'
