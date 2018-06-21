@@ -1,4 +1,8 @@
 ---
+# $Author$
+# $Date$
+# $Source$
+
 - name: Confirm RedHat lsb util is present
   yum:
     name: redhat-lsb-core
@@ -41,7 +45,7 @@
   when:
   - setup_agent_repo.changed
   tags:
-    - skip_ansible_lint
+  - skip_ansible_lint
   args:
     warn: false
 

@@ -1,4 +1,8 @@
 ---
+# $Author$
+# $Date$
+# $Source$
+
 - name: Setup the agent service
   service:
     name: newrelic-infra
