@@ -26,5 +26,3 @@
     state: absent
   when:
   - newrelic_log_dir is defined
-  - nrinfragent_config is defined
-  - nrinfragent_config.log_file is defined

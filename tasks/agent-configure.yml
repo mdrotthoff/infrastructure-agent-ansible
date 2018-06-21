@@ -8,7 +8,7 @@
     src:  newrelic-infra.yml.j2
     dest: /etc/newrelic-infra.yml
     mode: 0600
-  notify: restart newrelic-infra
+  notify: Restart newrelic-infra
 
 - name: Ensure the target log file directory exists
   file:
@@ -19,12 +19,11 @@
   - nrinfragent_config is defined
   - nrinfragent_config.log_file is defined
 
-# Add to configuration to control service state / enabled
 - name: Setup the agent service
   service:
     name: newrelic-infra
-    state: started
-    enabled: yes
+    state: "{{ newrelic_service_state | default(started) }}"
+    enabled: "{{ newrelic_service_enabled | default(true) }}"
 
 - name: Configure logrotate for the files
   template:
