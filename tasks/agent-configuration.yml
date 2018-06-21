@@ -15,6 +15,7 @@
   - nrinfragent_config is defined
   - nrinfragent_config.log_file is defined
 
+# Add to configuration to control service state / enabled
 - name: Setup the agent service
   service:
     name: newrelic-infra
