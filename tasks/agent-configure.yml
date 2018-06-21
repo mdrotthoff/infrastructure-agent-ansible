@@ -1,4 +1,8 @@
 ---
+# $Author$
+# $Date$
+# $Source$
+
 - name: Setup agent configuration
   template:
     src:  newrelic-infra.yml.j2

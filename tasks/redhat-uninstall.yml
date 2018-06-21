@@ -1,4 +1,13 @@
 ---
+# $Author$
+# $Date$
+# $Source$
+
+- name: Deconfigure the agent if requested
+  include_tasks: agent-deconfigure.yml
+  when:
+  - nrinfragent_state == "absent"
+
 - name: Uninstall agent
   yum:
     name: "newrelic-infra{{ nrinfragent_version }}"
