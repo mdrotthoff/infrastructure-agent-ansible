@@ -9,7 +9,6 @@
   file:
     path: /etc/newrelic-infra.yml
     state: absent
-  notify: restart newrelic-infra
 
 - name: Deconfigure logrotate for the files
   file:
