@@ -1,0 +1,17 @@
+---
+# $Author$
+# $Date$
+# $Source$
+
+- name: Deconfigure the agent if requested
+  include_tasks: agent-deconfigure.yml
+
+- name: Setup agent repo reference
+  apt_repository:
+    repo: "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt {{ nrinfragent_os_codename }} main"
+    state: absent
+
+- name: Remove agent repo keys
+  apt_key:
+    url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    state: absent

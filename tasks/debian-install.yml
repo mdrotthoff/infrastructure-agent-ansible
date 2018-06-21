@@ -1,5 +1,9 @@
 ---
-- name: setup agent repo keys
+# $Author$
+# $Date$
+# $Source$
+
+- name: Setup agent repo keys
   apt_key:
     url: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     state: present
@@ -9,18 +13,16 @@
     name: apt-transport-https
     state: present
 
-- name: setup agent repo reference
+- name: Setup agent repo reference
   apt_repository:
     repo: "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt {{ nrinfragent_os_codename }} main"
     state: present
     update_cache: "yes"
 
-- name: install agent
+- name: Install agent
   apt:
     name: "newrelic-infra{{ nrinfragent_version }}"
     state: "{{ nrinfragent_state }}"
 
 - name: Configure the agent for use
   include_tasks: agent-configure.yml
-#  when:
-#  - nrinfragent_state != "absent"
