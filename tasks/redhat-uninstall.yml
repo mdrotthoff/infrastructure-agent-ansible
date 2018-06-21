@@ -1,0 +1,21 @@
+---
+- name: Uninstall agent
+  yum:
+    name: "newrelic-infra{{ nrinfragent_version }}"
+    state: "{{ nrinfragent_state }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: setup agent repo reference
+  yum_repository:
+    baseurl: "https://download.newrelic.com/infrastructure_agent/linux/yum/el/{{ (ansible_distribution == 'Amazon') | ternary('6', nrinfragent_os_version) }}/x86_64"
+    gpgcheck: "yes"
+    gpgkey: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    name: 'newrelic-infra'
+    repo_gpgcheck: "yes"
+    state: "{{ nrinfragent_state }}"
+    description: New Relic Infrastructure
+
+- name: Remove agent repo keys
+  rpm_key:
+    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    state: "{{ nrinfragent_state }}"
