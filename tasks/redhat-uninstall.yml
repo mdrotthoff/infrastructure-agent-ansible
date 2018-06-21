@@ -5,8 +5,6 @@
 
 - name: Deconfigure the agent if requested
   include_tasks: agent-deconfigure.yml
-#  when:
-#  - nrinfragent_state == "absent"
 
 - name: Uninstall agent
   yum:

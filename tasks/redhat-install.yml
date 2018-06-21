@@ -3,6 +3,13 @@
   yum:
     name: redhat-lsb-core
     state: present
+  register: yum_redhat_lsb_result
+
+- name: Display the lsb status
+  debug:
+    var: yum_redhat_lsb_result
+    verbosity: 2
+
 
 # Only do this if redhat-lsb-core was not initially present
 - name: Re-read ansible_lsb facts
