@@ -14,4 +14,4 @@
   listen: Restart newrelic-infra
   service:
     name: newrelic-infra
-    state: "{{ newrelic_service_state | default(started) }}"
+    state: "{{ newrelic_service_state | default('started') }}"
