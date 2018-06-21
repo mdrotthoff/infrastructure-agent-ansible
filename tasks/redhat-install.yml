@@ -39,3 +39,9 @@
     name: "newrelic-infra{{ nrinfragent_version }}"
     state: "{{ nrinfragent_state }}"
   ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Configure the agent for use
+  include_tasks: agent-configure.yml
+#  when:
+#  - nrinfragent_state != "absent"
+  

@@ -34,7 +34,7 @@
   - nrinfragent_os_name|lower == 'suse'
   - nrinfragent_state != "absent"
 
-- name: Configure the agent for use
-  include_tasks: agent-configure.yml
-  when:
-  - nrinfragent_state != "absent"
+#- name: Configure the agent for use
+#  include_tasks: agent-configure.yml
+#  when:
+#  - nrinfragent_state != "absent"

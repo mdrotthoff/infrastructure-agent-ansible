@@ -18,3 +18,8 @@
   zypper:
     name: newrelic-infra
     state: "{{ nrinfragent_state }}"
+
+- name: Configure the agent for use
+  include_tasks: agent-configure.yml
+  when:
+  - nrinfragent_state != "absent"
