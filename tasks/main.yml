@@ -1,4 +1,15 @@
 ---
+# $Author$
+# $Date$
+# $Source$
+
+# main task file for newrelic.infr
+
+- name: Display New Relic configuration to be applied
+  debug:
+    var: nrinfragent_config
+    verbosity: 2
+
 - name: Execute set up on a RedHat based system
   include_tasks: install-redhat.yml
   when:
