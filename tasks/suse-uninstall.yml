@@ -3,10 +3,15 @@
 # $Date$
 # $Source$
 
-- name: Setup agent repo keys
-  rpm_key:
-    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
-    state: present
+- name: Deconfigure the agent if requested
+  include_tasks: agent-deconfigure.yml
+#  when:
+#  - nrinfragent_state == "absent"
+
+- name: Deinstall agent
+  zypper:
+    name: newrelic-infra
+    state: absent
 
 - name: Setup agent repo reference
   zypper_repository:
@@ -16,12 +21,9 @@
     runrefresh: "yes"
     auto_import_keys: "yes"
     disable_gpg_check: "yes"
-    state: present
+    state: absent
 
-- name: Install agent
-  zypper:
-    name: newrelic-infra
-    state: "{{ nrinfragent_state }}"
-
-- name: Configure the agent for use
-  include_tasks: agent-configure.yml
+- name: Setup agent repo keys
+  rpm_key:
+    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    state: absent
