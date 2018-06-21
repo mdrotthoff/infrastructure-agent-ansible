@@ -22,7 +22,7 @@
 - name: Setup the agent service
   service:
     name: newrelic-infra
-    state: "{{ newrelic_service_state | default(started) }}"
+    state: "{{ newrelic_service_state | default('started') }}"
     enabled: "{{ newrelic_service_enabled | default(true) }}"
 
 - name: Configure logrotate for the files
