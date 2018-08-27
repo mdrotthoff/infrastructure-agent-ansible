@@ -10,32 +10,30 @@
     var: nrinfragent_config
     verbosity: 2
 
-#- name: Deconfigure the agent if requested
-#  include_tasks: agent-deconfigure.yml
-#  when:
-#  - nrinfragent_state == "absent"
-
+# Process a Redhat based system
 - name: Execute set up on a RedHat based system
   include_tasks: redhat-install.yml
   when:
   - nrinfragent_os_name|lower == 'redhat'
   - nrinfragent_state != "absent"
 
-- name: Execute set up on a RedHat based system
+- name: Execute removal from a RedHat based system
   include_tasks: redhat-uninstall.yml
   when:
   - nrinfragent_os_name|lower == 'redhat'
   - nrinfragent_state == "absent"
 
-# Need to add uninstall tasks for when state == absent
+# Process a Debian based system
+# Need to add Debian deinstall tasks for when state == absent
 - name: Execute set up on a Debian based system
   include_tasks: debian-install.yml
   when:
   - nrinfragent_os_name|lower == 'debian'
   - nrinfragent_state != "absent"
 
-# Need to add uninstall tasks for when state == absent
-- name: Execute set up on a Suse based system
+# Process a Suse based system
+# Need to add Suse deinstall tasks for when state == absent
+- name: Execute setup on a Suse based system
   include_tasks: suse-install.yml
   when:
   - nrinfragent_os_name|lower == 'suse'

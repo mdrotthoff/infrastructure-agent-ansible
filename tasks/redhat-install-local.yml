@@ -1,0 +1,43 @@
+---
+# $Author$
+# $Date$
+# $Source$
+
+- name: Clear the list of the newrelic-infra agent packages required
+  set_fact:
+    newrelic_infra_sources: "[]"
+
+- name: Create a list of the newrelic-infra agent packages required
+  set_fact:
+    newrelic_infra_sources: "{{ newrelic_infra_sources | default([]) }} + [ '{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm' ]"
+  with_items:  "{{ newrelic_infra_packages }}"
+
+- name: Display the repo download URL
+  debug:
+    var: newrelic_infra_sources
+    verbosity: 2
+
+- name: Copy newrelic-infra agent packages to the host
+  copy:
+    src:      "{{ newrelic_infra_agent_source }}/el{{ ansible_distribution_major_version }}/{{ item }}"    
+    dest:     "/tmp/{{ item }}"
+    owner:    root
+    group:    root
+    mode:     '0600'
+  with_items: "{{ newrelic_infra_sources }}"
+  check_mode: false
+
+- name: Install the newrelic-infra agent packages.
+  yum:
+    name:     "/tmp/{{ item }}"
+    state:    present
+  with_items: "{{ newrelic_infra_sources }}"
+  notify:     Restart newrelic-infra
+
+- name: Remove the temporary newrelic-infra packages used for the install
+  file:
+    name:     "/tmp/{{ item }}"
+    state:    absent
+  with_items: "{{ newrelic_infra_sources }}"
+  check_mode: false
+  

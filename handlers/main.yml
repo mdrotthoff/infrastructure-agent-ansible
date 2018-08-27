@@ -10,8 +10,8 @@
     name: newrelic-infra
     state: stopped
 
-- name: Set newrelic-infra service to the desired state
-  listen: Restart newrelic-infra
-  service:
-    name: newrelic-infra
-    state: "{{ newrelic_service_state | default('started') }}"
+#- name: Set newrelic-infra service to the desired state
+#  listen: Restart newrelic-infra
+#  service:
+#    name: newrelic-infra
+#    state: "{{ newrelic_service_state | default('started') }}"

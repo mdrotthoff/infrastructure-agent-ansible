@@ -1,7 +1,23 @@
 ---
 nrinfragent_state: "latest"
+#nrinfragent_state: "absent"
 nrinfragent_version: "*"
+nrinfragent_external_install: false
 nrinfragent_config:
   license_key: YOUR_LICENSE_KEY
 logrotate_conf_dir: "/etc/logrotate.d/"
 logrotate_scripts: []
+
+newrelic_infra_packages:
+- name: "newrelic-infra"
+  version: "1.0.912"
+  release: "1"
+- name: "newrelic-infra-integrations"
+  version: "1.3.0"
+  release: "1"
+- name: "nrjmx"
+  version: "1.0.0"
+  release: "1"
+#newrelic_infra_agent_repo:
+# - "opsview-agent-{{ opsview_agent_version }}-{{ opsview_agent_release }}.el{{ ansible_distribution_major_version }}.{{ ansible_architecture }}.rpm"
+newrelic_infra_agent_source: "files/newrelic/"
