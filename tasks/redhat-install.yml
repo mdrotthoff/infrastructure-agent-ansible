@@ -22,12 +22,12 @@
 - name: Execute set up on a RedHat based system from local sources
   include_tasks: redhat-install-local.yml
   when:
-  - nrinfragent_external_install != true
+  - newrelic_external_install != true
 
 - name: Execute set up on a RedHat based system from external sources
   include_tasks: redhat-install-external.yml
   when:
-  - nrinfragent_external_install == true
+  - newrelic_external_install == true
 
 - name: Configure the agent for use
   include_tasks: agent-configure.yml

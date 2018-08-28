@@ -2,12 +2,14 @@
 nrinfragent_state: "latest"
 #nrinfragent_state: "absent"
 nrinfragent_version: "*"
-nrinfragent_external_install: false
 nrinfragent_config:
   license_key: YOUR_LICENSE_KEY
 logrotate_conf_dir: "/etc/logrotate.d/"
 logrotate_scripts: []
 
+newrelic_external_install: true
+newrelic_service_enabled: true
+newrelic_service_state: running
 newrelic_infra_packages:
 - name: "newrelic-infra"
   version: "1.0.912"

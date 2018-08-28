@@ -3,6 +3,23 @@
 # $Date$
 # $Source$
 
+- name: Remove agent repo keys if they exist
+  rpm_key:
+    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    state: absent
+
+- name: Remove agent repo reference
+  yum_repository:
+    name: 'newrelic-infra'
+    state: absent
+#  register: setup_agent_repo
+  notify: yum-clean-metadata
+
+- name: Remove agent repo keys
+  rpm_key:
+    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
+    state: absent
+
 - name: Clear the list of the newrelic-infra agent packages required
   set_fact:
     newrelic_infra_sources: "[]"
@@ -12,7 +29,7 @@
     newrelic_infra_sources: "{{ newrelic_infra_sources | default([]) }} + [ '{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm' ]"
   with_items:  "{{ newrelic_infra_packages }}"
 
-- name: Display the repo download URL
+- name: Display the newrelic-infra agent packages to be installed
   debug:
     var: newrelic_infra_sources
     verbosity: 2
