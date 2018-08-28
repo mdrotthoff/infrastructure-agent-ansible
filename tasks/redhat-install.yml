@@ -3,6 +3,7 @@
 # $Date$
 # $Source$
 
+# Set up the Newrelic Infrastructure agent on a Redhat server
 - name: Confirm RedHat lsb util is present
   yum:
     name: redhat-lsb-core

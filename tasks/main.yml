@@ -4,7 +4,6 @@
 # $Source$
 
 # main task file for newrelic.infr
-
 - name: Display New Relic configuration to be applied
   debug:
     var: nrinfragent_config

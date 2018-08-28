@@ -3,6 +3,7 @@
 # $Date$
 # $Source$
 
+# Uninstall the Newrelic Infrastructure agent from a Redhat server
 - name: Deconfigure the agent if requested
   include_tasks: agent-deconfigure.yml
 
@@ -26,3 +27,4 @@
   rpm_key:
     key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     state: absent
+  ignore_errors: true

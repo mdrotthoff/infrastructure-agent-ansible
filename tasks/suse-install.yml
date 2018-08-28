@@ -3,6 +3,7 @@
 # $Date$
 # $Source$
 
+# Set up the Newrelic Infrastructure agent on a Suse server
 - name: Setup agent repo keys
   rpm_key:
     key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg

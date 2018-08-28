@@ -3,22 +3,18 @@
 # $Date$
 # $Source$
 
+# Set up the Newrelic Infrastructure agent on a Redhat server from local files
 - name: Remove agent repo keys if they exist
   rpm_key:
     key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     state: absent
+  ignore_errors: true
 
 - name: Remove agent repo reference
   yum_repository:
     name: 'newrelic-infra'
     state: absent
-#  register: setup_agent_repo
   notify: yum-clean-metadata
-
-- name: Remove agent repo keys
-  rpm_key:
-    key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
-    state: absent
 
 - name: Clear the list of the newrelic-infra agent packages required
   set_fact:

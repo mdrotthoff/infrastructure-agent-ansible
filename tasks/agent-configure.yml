@@ -3,6 +3,7 @@
 # $Date$
 # $Source$
 
+# Configure the Newrelic infrastructure agent
 - name: Setup agent configuration
   template:
     src:  newrelic-infra.yml.j2

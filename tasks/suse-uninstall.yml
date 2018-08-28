@@ -3,10 +3,9 @@
 # $Date$
 # $Source$
 
+# Uninstall the Newrelic Infrastructure agent from a Suse server
 - name: Deconfigure the agent if requested
   include_tasks: agent-deconfigure.yml
-#  when:
-#  - nrinfragent_state == "absent"
 
 - name: Deinstall agent
   zypper:
