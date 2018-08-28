@@ -4,11 +4,12 @@
 # $Source$
 
 # De-configure the Newrelic infrastructure agent
-- name: Setup the agent service
+- name: Stop and disable the agent service
   service:
     name: newrelic-infra
     state: stopped
     enabled: false
+  ignore_errors: true
 
 - name: Remove agent configuration
   file:

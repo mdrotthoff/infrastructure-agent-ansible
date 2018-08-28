@@ -9,8 +9,10 @@
 
 - name: Uninstall agent
   yum:
-    name: "newrelic-infra{{ nrinfragent_version }}"
+    name: "{{ item.name }}"
+#    name: "newrelic-infra{{ nrinfragent_version }}"
     state: absent
+  with_items: "{{ newrelic_infra_packages }}"
   ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Remove agent repo reference
