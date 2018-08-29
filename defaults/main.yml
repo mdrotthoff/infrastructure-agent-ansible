@@ -20,6 +20,4 @@ newrelic_infra_packages:
 - name: "nrjmx"
   version: "1.0.0"
   release: "1"
-#newrelic_infra_agent_repo:
-# - "opsview-agent-{{ opsview_agent_version }}-{{ opsview_agent_release }}.el{{ ansible_distribution_major_version }}.{{ ansible_architecture }}.rpm"
 newrelic_infra_agent_source: "files/newrelic/"
