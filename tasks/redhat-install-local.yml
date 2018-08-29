@@ -54,5 +54,6 @@
     name: "/tmp/{{ item }}"
     state: absent
   with_items: "{{ newrelic_infra_sources }}"
-  changed_when: "{{ newrelic_install.changed }}"
+  changed_when: "newrelic_install.changed"
   check_mode: false
+
