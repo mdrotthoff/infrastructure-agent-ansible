@@ -9,6 +9,7 @@
     key: https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg
     state: absent
   ignore_errors: true
+  notify: yum-clean-metadata
 
 - name: Remove agent repo reference
   yum_repository:
