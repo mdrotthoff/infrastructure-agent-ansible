@@ -60,7 +60,7 @@
   changed_when: false
 
 - name: Install the newrelic-infra agent packages.
-  yum:
+  package:
     name: "/tmp/{{ item }}"
     state: present
   with_items: "{{ newrelic_infra_sources }}"
