@@ -34,44 +34,58 @@
     state: absent
   notify: yum-clean-metadata
 
-- name: Clear the list of the newrelic-infra agent packages required
-  set_fact:
-    newrelic_infra_sources: "[]"
+#- name: Clear the list of the newrelic-infra agent packages required
+#  set_fact:
+#    newrelic_infra_sources: "[]"
 
-- name: Create a list of the newrelic-infra agent packages required
-  set_fact:
-    newrelic_infra_sources: "{{ newrelic_infra_sources | default([]) }} + [ '{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm' ]"
-  with_items:  "{{ newrelic_infra_packages }}"
+#- name: Create a list of the newrelic-infra agent packages required
+#  set_fact:
+#    newrelic_infra_sources: "{{ newrelic_infra_sources | default([]) }} + [ '{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm' ]"
+#  with_items:  "{{ newrelic_infra_packages }}"
+
+#- name: Display the newrelic-infra agent packages to be installed
+#  debug:
+#    var: newrelic_infra_sources
+#    verbosity: 2
 
 - name: Display the newrelic-infra agent packages to be installed
   debug:
-    var: newrelic_infra_sources
-    verbosity: 2
+    msg: "{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+#    verbosity: 2
+  with_items:  "{{ newrelic_infra_packages }}"
 
 - name: Copy newrelic-infra agent packages to the host
   copy:
-    src: "{{ newrelic_infra_agent_source }}/el{{ ansible_distribution_major_version }}/{{ item }}"
-    dest: "/tmp/{{ item }}"
+    src: "{{ newrelic_infra_agent_source }}/el{{ ansible_distribution_major_version }}/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+    dest: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
     owner: root
     group: root
     mode: '0600'
-  with_items: "{{ newrelic_infra_sources }}"
+  with_items:  "{{ newrelic_infra_packages }}"
+#  with_items: "{{ newrelic_infra_sources }}"
   check_mode: false
   changed_when: false
 
 - name: Install the newrelic-infra agent packages.
   package:
-    name: "/tmp/{{ item }}"
-    state: present
-  with_items: "{{ newrelic_infra_sources }}"
+    name: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+    state: {{ item.state }}
+  with_items:  "{{ newrelic_infra_packages }}"
+#  with_items: "{{ newrelic_infra_sources }}"
   register: newrelic_install
   notify: Restart newrelic-infra
 
+- name: Display the newrelic-infra agent installation results
+  debug:
+    var: newrelic_install
+#    verbosity: 2
+
 - name: Remove the temporary newrelic-infra packages used for the install
   file:
-    name: "/tmp/{{ item }}"
+    name: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
     state: absent
-  with_items: "{{ newrelic_infra_sources }}"
+  with_items:  "{{ newrelic_infra_packages }}"
+#  with_items: "{{ newrelic_infra_sources }}"
   changed_when: "newrelic_install.changed"
   check_mode: false
 
