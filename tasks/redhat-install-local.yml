@@ -50,14 +50,14 @@
 
 - name: Display the newrelic-infra agent packages to be installed
   debug:
-    msg: "{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+    msg: "{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
 #    verbosity: 2
   with_items:  "{{ newrelic_infra_packages }}"
 
 - name: Copy newrelic-infra agent packages to the host
   copy:
-    src: "{{ newrelic_infra_agent_source }}/el{{ ansible_distribution_major_version }}/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
-    dest: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+    src: "{{ newrelic_infra_agent_source }}/el{{ ansible_distribution_major_version }}/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
+    dest: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     owner: root
     group: root
     mode: '0600'
@@ -68,8 +68,8 @@
 
 - name: Install the newrelic-infra agent packages.
   package:
-    name: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
-    state: {{ item.state }}
+    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
+    state: "{{ item.state }}"
   with_items:  "{{ newrelic_infra_packages }}"
 #  with_items: "{{ newrelic_infra_sources }}"
   register: newrelic_install
@@ -82,7 +82,7 @@
 
 - name: Remove the temporary newrelic-infra packages used for the install
   file:
-    name: "/tmp/{{ {{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm }}"
+    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     state: absent
   with_items:  "{{ newrelic_infra_packages }}"
 #  with_items: "{{ newrelic_infra_sources }}"
