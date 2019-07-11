@@ -34,20 +34,6 @@
     state: absent
   notify: yum-clean-metadata
 
-#- name: Clear the list of the newrelic-infra agent packages required
-#  set_fact:
-#    newrelic_infra_sources: "[]"
-
-#- name: Create a list of the newrelic-infra agent packages required
-#  set_fact:
-#    newrelic_infra_sources: "{{ newrelic_infra_sources | default([]) }} + [ '{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm' ]"
-#  with_items:  "{{ newrelic_infra_packages }}"
-
-#- name: Display the newrelic-infra agent packages to be installed
-#  debug:
-#    var: newrelic_infra_sources
-#    verbosity: 2
-
 - name: Display the newrelic-infra agent packages to be installed
   debug:
     msg: "{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
@@ -61,14 +47,13 @@
     owner: root
     group: root
     mode: '0600'
+  when:  item.state != "absent"
   with_items:  "{{ newrelic_infra_packages }}"
-#  with_items: "{{ newrelic_infra_sources }}"
   check_mode: false
   changed_when: false
 
 - name: Remove obsolete New Relic packages
   package:
-#    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   when:  item.state == "absent"
@@ -76,12 +61,10 @@
 
 - name: Install the newrelic-infra agent packages.
   package:
-#    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     state: "{{ item.state }}"
   when:  item.state != "absent"
   with_items:  "{{ newrelic_infra_packages }}"
-#  with_items: "{{ newrelic_infra_sources }}"
   register: newrelic_install
   notify: Restart newrelic-infra
 
@@ -95,7 +78,5 @@
     name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     state: absent
   with_items:  "{{ newrelic_infra_packages }}"
-#  with_items: "{{ newrelic_infra_sources }}"
   changed_when: "newrelic_install.changed"
   check_mode: false
-
