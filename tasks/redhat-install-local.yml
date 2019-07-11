@@ -68,7 +68,8 @@
 
 - name: Install the newrelic-infra agent packages.
   package:
-    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
+#    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
+    name: "{% if {{ item.state }} == 'present' %}/tmp/{% endif %}{{ item.name }}{% if {{ item.state }} == 'present' %}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm{% endif %}"
     state: "{{ item.state }}"
   with_items:  "{{ newrelic_infra_packages }}"
 #  with_items: "{{ newrelic_infra_sources }}"
