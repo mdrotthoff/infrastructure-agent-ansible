@@ -37,7 +37,7 @@
 - name: Display the newrelic-infra agent packages to be installed
   debug:
     msg: "{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
-#    verbosity: 2
+    verbosity: 2
   with_items:  "{{ newrelic_infra_packages }}"
 
 - name: Copy newrelic-infra agent packages to the host
@@ -71,7 +71,7 @@
 - name: Display the newrelic-infra agent installation results
   debug:
     var: newrelic_install
-#    verbosity: 2
+    verbosity: 2
 
 - name: Remove the temporary newrelic-infra packages used for the install
   file:
