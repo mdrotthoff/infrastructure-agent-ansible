@@ -66,11 +66,20 @@
   check_mode: false
   changed_when: false
 
+- name: Remove obsolete New Relic packages
+  package:
+#    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  when:  item.state == "absent"
+  with_items:  "{{ newrelic_infra_packages }}"
+
 - name: Install the newrelic-infra agent packages.
   package:
 #    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
-    name: "{% if {{ item.state }} == 'present' %}/tmp/{% endif %}{{ item.name }}{% if {{ item.state }} == 'present' %}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm{% endif %}"
+    name: "/tmp/{{ item.name }}-{{ item.version }}-{{ item.release }}.{{ ansible_architecture }}.rpm"
     state: "{{ item.state }}"
+  when:  item.state != "absent"
   with_items:  "{{ newrelic_infra_packages }}"
 #  with_items: "{{ newrelic_infra_sources }}"
   register: newrelic_install
