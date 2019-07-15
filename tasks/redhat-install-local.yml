@@ -58,6 +58,13 @@
     state: "{{ item.state }}"
   when:  item.state == "absent"
   with_items:  "{{ newrelic_infra_packages }}"
+  register: newrelic_install
+  notify: Restart newrelic-infra
+
+- name: Display the newrelic-infra agent removal results
+  debug:
+    var: newrelic_install
+    verbosity: 2
 
 - name: Install the newrelic-infra agent packages.
   package:
